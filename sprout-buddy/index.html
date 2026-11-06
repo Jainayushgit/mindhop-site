@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Sprout Buddy, a sample startup showing what a child builds in Mindhop Level 1.">
+<link rel="icon" href="/sprout-buddy/img/logo.png">
+<style>body{margin:0}</style>
+<title>Sprout Buddy</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;700;800;900&family=Figtree:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap">
+<style>
+/* Layout: a product launch page told as a scroll story (problem, product, how, personality, ad, help, buy), with a separate cobalt "Mindhop layer" that reveals how a kid built each part. Deliberately single light look, like a real D2C brand site. */
+:root{
+  --paper:#F5F9F2; --mint:#E3F2DF; --ink:#11281B; --ink-soft:#4B5F51; --line:#D3E3CF;
+  --clay:#DD6230; --clay-deep:#B9481B; --leaf:#2E9A46; --drop:#3B82F6;
+  --mh:#2440DF; --mh-deep:#162BA8; --sun:#FFD23F; --white:#FFFFFF;
+  --f-display:"Gabarito","Avenir Next","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Figtree","Segoe UI",system-ui,sans-serif;
+  --f-mh:"Bricolage Grotesque","Gabarito",system-ui,sans-serif;
+  --gut:max(16px, env(safe-area-inset-left,0px));
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--drop);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);line-height:1.02;letter-spacing:-.025em;margin:0;text-wrap:balance}
+h2{font-size:clamp(34px,5.2vw,64px);font-weight:800}
+h3{font-size:22px;font-weight:700;letter-spacing:-.01em}
+p{margin:0}
+.eyebrow{font-family:var(--f-display);font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--leaf)}
+.lede{font-size:clamp(18px,1.6vw,21px);color:var(--ink-soft);max-width:34em}
+section{position:relative;padding-block:clamp(72px,10vw,128px)}
+
+/* nav */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}
+.nav.scrolled{border-bottom-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-weight:800;font-size:21px;letter-spacing:-.02em}
+.brand img{width:30px;height:auto}
+.nav nav{display:flex;gap:26px;margin-left:auto;font-weight:500;font-size:15px}
+.nav nav a{text-decoration:none;color:var(--ink-soft)}
+.nav nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;border-radius:999px;font-family:var(--f-display);font-weight:700;text-decoration:none;transition:transform .15s,background .15s}
+.btn:active{transform:scale(.97)}
+.btn-clay{background:var(--clay);color:var(--white);padding:14px 26px;font-size:17px}
+.btn-clay:hover{background:var(--clay-deep)}
+.btn-ink{background:var(--ink);color:var(--paper);padding:10px 18px;font-size:15px}
+.btn-ghost{background:transparent;color:var(--ink);padding:14px 4px;font-size:17px}
+.btn-ghost:hover{text-decoration:underline;text-underline-offset:4px}
+@media (max-width:760px){.nav nav{display:none}.nav .btn-ink{margin-left:auto}}
+
+/* hero */
+.hero{padding-block:clamp(36px,6vw,72px) clamp(56px,8vw,96px)}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,72px);align-items:center}
+.hero h1{font-size:clamp(46px,7.4vw,96px);font-weight:900;letter-spacing:-.04em}
+.hero h1 em{font-style:normal;color:var(--clay)}
+.hero .lede{margin-top:22px}
+.hero .ctas{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:32px}
+.price{font-family:var(--f-display);font-weight:700;font-size:17px;color:var(--ink-soft)}
+.price b{color:var(--ink);font-size:22px}
+.hero-img{position:relative;border-radius:36px;overflow:hidden;background:var(--mint);aspect-ratio:4/5}
+.hero-img img{width:100%;height:100%;object-fit:cover}
+.glowtag{position:absolute;left:20px;bottom:20px;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.92);border-radius:999px;padding:10px 16px 10px 12px;font-weight:600;font-size:14px;box-shadow:0 6px 24px rgba(17,40,27,.12)}
+.glowtag i{width:12px;height:12px;border-radius:50%;background:var(--drop);box-shadow:0 0 0 0 rgba(59,130,246,.6);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(59,130,246,.55)}70%{box-shadow:0 0 0 12px rgba(59,130,246,0)}100%{box-shadow:0 0 0 0 rgba(59,130,246,0)}}
+.specs{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-size:15px;color:var(--ink-soft)}
+.specs b{display:block;font-family:var(--f-display);font-size:20px;color:var(--ink);font-weight:700}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}.hero-img{aspect-ratio:1/1;max-height:520px}}
+
+/* problem */
+.problem{padding:0}
+.problem .frame{position:relative;border-radius:36px;overflow:hidden;min-height:420px;display:flex;align-items:flex-end}
+.problem .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.problem .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,40,27,0) 30%,rgba(17,40,27,.78))}
+.problem .copy{position:relative;z-index:1;padding:clamp(24px,5vw,56px);color:var(--white);max-width:760px}
+.problem h2{color:var(--white)}
+.problem p{margin-top:14px;font-size:clamp(17px,1.5vw,20px);color:rgba(255,255,255,.88)}
+
+/* how */
+.how .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(32px,6vw,88px);align-items:center}
+.how .media{border-radius:36px;overflow:hidden;background:var(--mint)}
+.how ol{list-style:none;margin:36px 0 0;padding:0;display:grid;gap:0}
+.how li{display:grid;grid-template-columns:56px 1fr;gap:16px;padding:22px 0;border-top:1px solid var(--line)}
+.how li:last-child{border-bottom:1px solid var(--line)}
+.how li .n{font-family:var(--f-display);font-weight:800;font-size:15px;color:var(--leaf);padding-top:4px}
+.how li p{color:var(--ink-soft);margin-top:6px}
+@media (max-width:860px){.how .wrap{grid-template-columns:1fr}.how .media{order:2}}
+
+/* moods */
+.moods{background:var(--ink);color:var(--paper)}
+.moods h2{color:var(--paper)}
+.moods .lede{color:rgba(245,249,242,.72)}
+.moods .head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px}
+.moods .board{margin-top:44px;border-radius:32px;overflow:hidden;background:var(--mint)}
+.moodlist{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:1px;background:rgba(245,249,242,.14);border-radius:0 0 28px 28px;overflow:hidden}
+.moodlist div{background:var(--ink);padding:20px 22px}
+.moodlist b{font-family:var(--f-display);font-size:19px;display:block}
+.moodlist span{color:rgba(245,249,242,.7);font-size:15px}
+@media (max-width:700px){.moodlist{grid-template-columns:1fr 1fr}}
+
+/* ad */
+.ad .head{max-width:720px}
+.player{margin-top:40px;position:relative;border-radius:32px;overflow:hidden;background:var(--ink);aspect-ratio:16/9;max-width:100%}
+.player video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--ink)}
+.voice{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:16px;font-size:15px;color:var(--ink-soft)}
+.voice button{border:1.5px solid var(--line);background:var(--white);border-radius:999px;padding:8px 14px;font-weight:600;color:var(--ink)}
+.voice button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.player img{display:none}
+.player img.on{opacity:1}
+.player .sub{position:absolute;left:50%;bottom:9%;transform:translateX(-50%);width:max-content;max-width:88%;text-align:center;font-family:var(--f-display);font-weight:800;font-size:clamp(18px,3vw,38px);color:var(--white);text-shadow:0 2px 18px rgba(0,0,0,.45);letter-spacing:-.02em}
+.player .bar{position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(255,255,255,.2)}
+.player .bar i{display:block;height:100%;width:0;background:var(--clay)}
+.player .play{position:absolute;inset:0;margin:auto;width:86px;height:86px;border-radius:50%;border:0;background:var(--white);color:var(--ink);display:grid;place-items:center;box-shadow:0 10px 40px rgba(0,0,0,.25);transition:transform .2s,opacity .2s}
+.player .play:hover{transform:scale(1.06)}
+.player.playing .play{opacity:0;pointer-events:none}
+.player .badge{position:absolute;top:16px;left:16px;background:rgba(17,40,27,.72);color:var(--white);font-size:13px;font-weight:600;padding:6px 12px;border-radius:999px}
+.ad .frames{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:12px}
+.ad .frames button{padding:0;border:2px solid transparent;border-radius:14px;overflow:hidden;background:none}
+.ad .frames button.on{border-color:var(--clay)}
+@media (max-width:560px){.player .play{width:64px;height:64px}}
+
+/* jingle */
+.jingle{background:var(--mint)}
+.jingle .wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,80px);align-items:center}
+.lyrics{font-family:var(--f-display);font-weight:800;font-size:clamp(28px,3.6vw,46px);line-height:1.12;letter-spacing:-.025em}
+.lyrics span{display:block}
+.lyrics .tag{color:var(--clay);margin-top:18px}
+.audio{display:flex;align-items:center;gap:14px;margin-top:28px}
+.audio button{width:56px;height:56px;border-radius:50%;border:0;background:var(--ink);color:var(--paper);display:grid;place-items:center}
+.audio .t{font-size:15px;color:var(--ink-soft)}
+@media (max-width:860px){.jingle .wrap{grid-template-columns:1fr}}
+
+/* ask */
+.ask .wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(32px,6vw,80px);align-items:start}
+.chat{background:var(--white);border:1px solid var(--line);border-radius:28px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(17,40,27,.25);min-width:0}
+.chat-top{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.chat-top img{width:42px;height:42px;border-radius:50%}
+.chat-top b{display:block;font-family:var(--f-display);font-size:17px}
+.chat-top small{color:var(--leaf);font-size:13px;font-weight:600}
+.log{height:340px;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:82%;padding:11px 15px;border-radius:20px;font-size:15.5px;line-height:1.45}
+.msg.bot{background:var(--mint);border-bottom-left-radius:6px;align-self:flex-start}
+.msg.me{background:var(--ink);color:var(--paper);border-bottom-right-radius:6px;align-self:flex-end}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 20px 14px}
+.chips button{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:8px 14px;font-size:14px;font-weight:500;color:var(--ink)}
+.chips button:hover{border-color:var(--ink)}
+.askform{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.askform input{flex:1;min-width:0;border:1px solid var(--line);border-radius:999px;padding:12px 16px;font:inherit;font-size:15px;background:var(--paper);color:var(--ink)}
+.askform button{border:0;border-radius:999px;background:var(--clay);color:var(--white);padding:0 20px;font-family:var(--f-display);font-weight:700}
+@media (max-width:860px){.ask .wrap{grid-template-columns:1fr}.log{height:250px}}
+
+/* buy */
+.buy .card{display:grid;grid-template-columns:1fr 1fr;border-radius:36px;overflow:hidden;background:var(--white);border:1px solid var(--line)}
+.buy .card .pic{background:var(--mint);min-height:360px;position:relative}
+.buy .card .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.buy .card .body{padding:clamp(28px,5vw,64px);display:flex;flex-direction:column;justify-content:center;gap:18px}
+.swatches{display:flex;gap:12px;flex-wrap:wrap}
+.swatches button{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:var(--white);border-radius:999px;padding:7px 14px 7px 8px;font-size:15px;font-weight:600;color:var(--ink)}
+.swatches button[aria-pressed="true"]{border-color:var(--ink)}
+.swatches i{width:22px;height:22px;border-radius:50%;border:1px solid rgba(0,0,0,.08)}
+.buy .row{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px}
+.buy .ship{font-size:14px;color:var(--ink-soft)}
+@media (max-width:860px){.buy .card{grid-template-columns:1fr}.buy .card .pic{min-height:0;aspect-ratio:16/10}}
+
+/* footer */
+.foot{padding-block:48px 140px;border-top:1px solid var(--line);font-size:15px;color:var(--ink-soft)}
+.foot .wrap{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:center;justify-content:space-between}
+
+/* ---------- Mindhop layer ---------- */
+.mh{font-family:var(--f-mh)}
+.mh-toggle{position:fixed;z-index:20;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:6px;background:var(--mh);color:var(--white);border-radius:999px;padding:6px;box-shadow:0 14px 40px -8px rgba(36,64,223,.55);max-width:calc(100vw - 32px)}
+.mh-toggle .sw{display:flex;align-items:center;gap:12px;border:0;background:transparent;color:inherit;padding:8px 10px 8px 14px;font-family:var(--f-mh);font-weight:800;font-size:15px;white-space:nowrap}
+.mh-toggle .track{width:42px;height:24px;border-radius:999px;background:rgba(255,255,255,.28);position:relative;flex:none;transition:background .2s}
+.mh-toggle .track::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--white);transition:transform .2s}
+.mh-toggle .sw[aria-checked="true"] .track{background:var(--sun)}
+.mh-toggle .sw[aria-checked="true"] .track::after{transform:translateX(18px);background:var(--mh-deep)}
+.mh-toggle .demo{background:var(--sun);color:var(--mh-deep);border-radius:999px;padding:10px 16px;font-family:var(--f-mh);font-weight:800;font-size:14px;text-decoration:none;white-space:nowrap}
+@media (max-width:480px){.mh-toggle .sw{font-size:14px;padding-left:10px;gap:8px}.mh-toggle .demo{padding:10px 12px;font-size:13px}}
+.note{display:none}
+body.reveal .note{display:block}
+body.reveal [data-lesson]{outline:2px dashed color-mix(in srgb,var(--mh) 60%,transparent);outline-offset:-10px}
+.note{position:absolute;z-index:5;top:clamp(16px,3vw,28px);right:max(16px, env(safe-area-inset-right,0px));width:min(340px,calc(100% - 32px));background:var(--mh);color:var(--white);border-radius:20px;padding:18px 20px;font-family:var(--f-mh);box-shadow:0 18px 40px -12px rgba(22,43,168,.5);animation:pop .35s cubic-bezier(.2,.9,.3,1.3)}
+@keyframes pop{from{transform:translateY(8px) scale(.96);opacity:.4}to{transform:none;opacity:1}}
+.note .l{display:inline-block;background:var(--sun);color:var(--mh-deep);font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
+.note h4{margin:10px 0 10px;font-size:19px;font-weight:800;line-height:1.15}
+.note dl{margin:0;display:grid;gap:8px;font-family:var(--f-body);font-size:14px;line-height:1.45}
+.note dt{font-family:var(--f-mh);font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--sun)}
+.note dd{margin:0;color:rgba(255,255,255,.92)}
+@media (max-width:860px){body.reveal .note{position:relative;top:auto;right:auto;width:auto;margin:0 max(16px, env(safe-area-inset-right,0px)) 20px max(16px, env(safe-area-inset-left,0px))}.problem .note{margin-top:16px!important}}
+.mh-band{background:var(--mh);color:var(--white)}
+.mh-band .wrap{padding-block:clamp(56px,8vw,96px);display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+.mh-band h2{font-family:var(--f-mh);font-weight:800;letter-spacing:-.03em;color:var(--white)}
+.mh-band p{margin-top:16px;color:rgba(255,255,255,.86);max-width:36em}
+.mh-band .acts{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.mh-band .acts a{font-family:var(--f-mh);font-weight:800;text-decoration:none;border-radius:999px;padding:15px 24px;font-size:17px}
+.mh-band .a1{background:var(--sun);color:var(--mh-deep)}
+.mh-band .a2{background:rgba(255,255,255,.12);color:var(--white);border:1.5px solid rgba(255,255,255,.4)}
+.mh-band .num{font-family:var(--f-body);font-size:15px;color:rgba(255,255,255,.8);user-select:all}
+@media (max-width:860px){.mh-band .wrap{grid-template-columns:1fr}}
+
+/* sample dialog */
+.modal{position:fixed;inset:0;z-index:30;background:rgba(17,40,27,.55);display:grid;place-items:center;padding:20px}
+.modal .box{background:var(--white);border-radius:28px;max-width:440px;width:100%;padding:30px;text-align:left}
+.modal .box img{width:64px;margin-bottom:14px}
+.modal h3{font-size:26px}
+.modal p{margin-top:12px;color:var(--ink-soft)}
+.modal .acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.modal .acts a{background:var(--mh);color:var(--white);font-family:var(--f-mh);font-weight:800;padding:12px 18px;border-radius:999px;text-decoration:none}
+.modal .acts button{background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:12px 18px;font-weight:600;color:var(--ink)}
+</style>
+
+<header class="nav" id="nav"><div class="wrap">
+  <a class="brand" href="#top"><img src="/sprout-buddy/img/logo.png" alt="" width="30" height="38">Sprout Buddy</a>
+  <nav aria-label="Sections"><a href="#how">How it works</a><a href="#ad">Watch the ad</a><a href="#ask">Questions</a></nav>
+  <a class="btn btn-ink" href="#buy">Get yours</a>
+</div></header>
+
+<main id="top">
+<section class="hero" data-lesson>
+  <aside class="note"><span class="l">Free class · Invent it</span><h4>It started with one sentence</h4><dl><dt>Your child did</dt><dd>Invented the product from a real problem at home: "A pot that tells you when your plant is thirsty."</dd><dt>AI helped with</dt><dd>Bringing that sentence to life as a first website, in the free class.</dd></dl></aside>
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">The smart pot for forgetful plant parents</p>
+      <h1 style="margin-top:16px">Your plant will tell you when it's <em>thirsty.</em></h1>
+      <p class="lede">Sprout Buddy checks the soil all day. When it gets dry, a little water-drop light glows blue. You water, it smiles, and your plant keeps growing.</p>
+      <div class="ctas"><a class="btn btn-clay" href="#buy">Get Sprout Buddy</a><a class="btn btn-ghost" href="#ad">Watch the ad</a></div>
+      <div class="specs"><div><b>1 glow</b>means water me</div><div><b>0 apps</b>the light is the reminder</div><div><b>3 colours</b>terracotta, mint, sunshine</div></div>
+    </div>
+    <div class="hero-img"><img src="/sprout-buddy/img/hero.webp" alt="A smiling terracotta Sprout Buddy pot with a green sprout on a sunny windowsill, its water-drop light glowing blue" width="1100" height="1375" fetchpriority="high"><span class="glowtag"><i></i>Glowing = time to water</span></div>
+  </div>
+</section>
+
+<section class="problem" data-lesson>
+  <div class="wrap">
+    <aside class="note" style="top:16px;right:32px"><span class="l">Class 4 · Customers</span><h4>What customers really want</h4><dl><dt>Your child did</dt><dd>Interviewed three customer characters and found the real problem: people don't forget their plants, they just can't tell when to water.</dd><dt>AI helped with</dt><dd>Playing the customers. Your child then checked an AI research report for made-up facts.</dd></dl></aside>
+    <div class="frame">
+      <img src="/sprout-buddy/img/ad1.webp" alt="A drooping houseplant in a plain pot on a grey, rainy windowsill" width="1400" height="788" loading="lazy">
+      <div class="copy"><h2>Plants don't die from neglect. They die from guessing.</h2><p>Too much water, too little, too late. Soil looks the same either way, so most of us just guess. Sprout Buddy takes the guessing away.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how" data-lesson>
+  <aside class="note"><span class="l">Class 2 · Website</span><h4>Your child is the editor</h4><dl><dt>Your child did</dt><dd>Decided what each section should say, then improved the page in rounds using feedback from you.</dd><dt>AI helped with</dt><dd>Writing first drafts of the copy, like a copywriter, and building the page.</dd></dl></aside>
+  <div class="wrap">
+    <div class="media"><img src="/sprout-buddy/img/desk.webp" alt="Sprout Buddy on a colourful study desk beside books and pencils, its water-drop light glowing" width="1000" height="1250" loading="lazy"></div>
+    <div>
+      <p class="eyebrow">How it works</p>
+      <h2 style="margin-top:14px">Four steps. Zero guessing.</h2>
+      <ol>
+        <li><span class="n">01</span><div><h3>Plant it</h3><p>Pop a small plant into Sprout Buddy, just like any pot.</p></div></li>
+        <li><span class="n">02</span><div><h3>It checks the soil</h3><p>A sensor in the base quietly measures how damp the soil is.</p></div></li>
+        <li><span class="n">03</span><div><h3>The drop glows blue</h3><p>When the soil gets dry, the water-drop light switches on. No app, no buzzing phone.</p></div></li>
+        <li><span class="n">04</span><div><h3>Water and grow</h3><p>Give it a drink. The light switches off and Sprout Buddy's face goes happy.</p></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="moods" data-lesson>
+  <aside class="note"><span class="l">Class 1 · Brand</span><h4>A name, a logo and a mascot</h4><dl><dt>Your child did</dt><dd>Named it, chose the colours, and decided what each of the mascot's moods means.</dd><dt>AI helped with</dt><dd>Drawing the mascot. Your child learned to keep it looking the same in every picture.</dd></dl></aside>
+  <div class="wrap">
+    <div class="head"><div><p class="eyebrow" style="color:var(--sun)">Meet the buddy</p><h2 style="margin-top:14px">It has moods. Your plant finally has a face.</h2></div><p class="lede">Kids learn to read their plant like a friend. Grown-ups just like that it works.</p></div>
+    <div class="board"><img src="/sprout-buddy/img/moods.webp" alt="The Sprout Buddy mascot in six moods: happy, thirsty, excited, sleepy, thinking and waving" width="1400" height="933" loading="lazy"></div>
+    <div class="moodlist"><div><b>Happy</b><span>Soil is just right.</span></div><div><b>Thirsty</b><span>Leaves droop. Time for water.</span></div><div><b>Excited</b><span>You just watered it.</span></div><div><b>Sleepy</b><span>Night time. Even plants rest.</span></div><div><b>Thinking</b><span>Checking the soil.</span></div><div><b>Waving</b><span>Hello, plant friend.</span></div></div>
+  </div>
+</section>
+
+<section class="ad" id="ad" data-lesson>
+  <aside class="note"><span class="l">Class 6 · Launch ad</span><h4>Everything becomes one ad</h4><dl><dt>Your child did</dt><dd>Wrote the scenes and directed the logo, mascot, pictures, voice and jingle into one 30-second film.</dd><dt>AI helped with</dt><dd>Making each scene and the voiceover. Your child learned that ads must never make false claims.</dd></dl></aside>
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">The launch ad</p><h2 style="margin-top:14px">Thirty seconds. One very happy plant.</h2></div>
+    <div class="player"><video id="adVideo" controls playsinline preload="metadata" poster="/sprout-buddy/img/ad5.webp" src="/ad-india.mp4" width="1280" height="720"></video></div>
+    <div class="voice" role="group" aria-label="Voiceover accent"><span>Voiceover</span><button type="button" id="vIn" aria-pressed="true">Indian English</button><button type="button" id="vUs" aria-pressed="false">US English</button></div>
+  </div>
+</section>
+
+<section class="jingle" data-lesson>
+  <aside class="note"><span class="l">Class 3 · Sound</span><h4>A brand you can hum</h4><dl><dt>Your child did</dt><dd>Wrote the lyrics and picked the mood: bouncy, bright, easy to remember.</dd><dt>AI helped with</dt><dd>Making the music and the voice from the child's lyrics and chosen style.</dd></dl></aside>
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Our jingle</p>
+      <h2 style="margin-top:14px">You'll be humming it at the watering can.</h2>
+      <div class="audio" id="audioRow" hidden><button type="button" id="playJ" aria-label="Play the jingle"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path id="jIcon" d="M7 4.5v15l12-7.5z" fill="currentColor"/></svg></button><span class="t" id="jt">Sprout Buddy (Never Forget) · 0:20</span><audio id="jingle" src="/jingle.mp3" preload="metadata"></audio></div>
+    </div>
+    <div class="lyrics" aria-label="Jingle lyrics"><span>Little leaf is looking low,</span><span>Sprout Buddy lets you know!</span><span>Blink, blink, time to drink,</span><span>Watch your green friend grow!</span><span class="tag">Sprout Buddy, never forget.<br>Your plant's best friend yet!</span></div>
+  </div>
+</section>
+
+<section class="ask" id="ask" data-lesson>
+  <aside class="note"><span class="l">Class 5 · Helper bot</span><h4>A bot that tells the truth</h4><dl><dt>Your child did</dt><dd>Wrote its rules: only talk about Sprout Buddy, never promise a plant will live forever, never make up prices. Then tried to trick it.</dd><dt>AI helped with</dt><dd>Answering customer questions using only the child's facts.</dd></dl></aside>
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Questions?</p>
+      <h2 style="margin-top:14px">Ask Sprout Buddy.</h2>
+      <p class="lede" style="margin-top:18px">Our helper answers from what Sprout Buddy can really do. It won't make promises we can't keep. Try to catch it out.</p>
+    </div>
+    <div class="chat">
+      <div class="chat-top"><img src="/sprout-buddy/img/avatar.webp" alt="" width="42" height="42"><div><b>Sprout Buddy helper</b><small>● Online</small></div></div>
+      <div class="log" id="log" aria-live="polite"><div class="msg bot">Hi! I'm Sprout Buddy's helper. Ask me anything about the pot.</div></div>
+      <div class="chips" id="chips"></div>
+      <form class="askform" id="askForm"><label for="askInput" style="position:absolute;left:-9999px">Your question</label><input id="askInput" autocomplete="off" maxlength="200" placeholder="Type a question"><button type="submit">Send</button></form>
+    </div>
+  </div>
+</section>
+
+<section class="buy" id="buy" data-lesson>
+  <aside class="note" style="top:16px;right:32px"><span class="l">Class 2 · Call to action</span><h4>Asking for the sale</h4><dl><dt>Your child did</dt><dd>Wrote the button and the last words a customer reads. No made-up reviews or fake deals: that's a rule.</dd><dt>AI helped with</dt><dd>The product pictures in each colour, from Class 1.</dd></dl></aside>
+  <div class="wrap">
+    <div class="card">
+      <div class="pic"><img src="/sprout-buddy/img/hero2.webp" id="buyImg" alt="Sprout Buddy in terracotta on a sunlit windowsill" width="1000" height="1250"></div>
+      <div class="body">
+        <p class="eyebrow">Sprout Buddy · Smart pot</p>
+        <h2>Give your plant a buddy.</h2>
+        <p style="color:var(--ink-soft)">One pot, one happy plant. Pick a colour.</p>
+        <div class="swatches" id="swatches">
+          <button type="button" aria-pressed="true" data-c="Terracotta"><i style="background:#D9673A"></i>Terracotta</button>
+          <button type="button" aria-pressed="false" data-c="Mint"><i style="background:#A9DCC0"></i>Mint</button>
+          <button type="button" aria-pressed="false" data-c="Sunshine"><i style="background:#F4C83A"></i>Sunshine</button>
+        </div>
+        <div class="row"><button class="btn btn-clay" id="buyBtn" type="button">Get Sprout Buddy</button><span class="ship">Terracotta, mint or sunshine yellow</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<section class="mh-band mh" id="mindhop" style="padding:0">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow" style="color:var(--sun);font-family:var(--f-mh)">Made in Mindhop Level 1 · Create with AI</p>
+      <h2 style="margin-top:14px">Sprout Buddy isn't a real company. Yet.</h2>
+      <p>Our team made it the way a student would, to show what your child builds in Mindhop's Level 1 for ages 9 to 13. After a free first class, 8 live 1:1 classes over 4 weeks take them from an idea to a brand, website, jingle, helper bot and launch ad, all made with AI tools. On Investor Day, they pitch it live.</p>
+      <p>Turn on <b>See how a kid built this</b> at the bottom of the screen to see which class made each part. Its images, music and voice were made with AI tools.</p>
+    </div>
+    <div class="acts">
+      <a class="a1" href="https://wa.me/916363575529?text=Hi%20Mindhop!%20I%27d%20like%20to%20book%20a%20free%20class%20for%20my%20child." target="_blank" rel="noopener">Book a free class</a>
+      <a class="a2" href="/sprout-buddy/pitch">See the Investor Day pitch →</a><a class="a2" href="/">See the full course →</a>
+      <span class="num">WhatsApp +91 6363 575 529</span>
+    </div>
+  </div>
+</section>
+
+<footer class="foot"><div class="wrap"><a class="brand" href="#top" style="font-size:17px"><img src="/sprout-buddy/img/logo.png" alt="" width="24" height="30">Sprout Buddy</a><span>A sample startup made by the Mindhop team. Nothing here is for sale.</span></div></footer>
+
+<div class="mh-toggle mh" role="group" aria-label="Mindhop">
+  <button class="sw" id="reveal" type="button" role="switch" aria-checked="false"><span class="track" aria-hidden="true"></span>See how a kid built this</button>
+  <a class="demo" href="#mindhop">Free class</a>
+</div>
+
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="mt">
+  <div class="box">
+    <img src="/sprout-buddy/img/logo.png" alt="" width="64" height="81">
+    <h3 id="mt">Nice choice. But this pot isn't real.</h3>
+    <p>Sprout Buddy is a sample startup, so there's no price and nothing to buy. In Mindhop's Level 1, your child invents their own product and builds a page just like this one, button and all.</p>
+    <div class="acts"><a href="https://wa.me/916363575529?text=Hi%20Mindhop!%20I%27d%20like%20to%20book%20a%20free%20class%20for%20my%20child." target="_blank" rel="noopener">Book a free class</a><button type="button" id="closeM">Keep looking</button></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $=function(s){return document.querySelector(s)};
+  // nav border
+  var nav=$('#nav');addEventListener('scroll',function(){nav.classList.toggle('scrolled',scrollY>8)},{passive:true});
+
+  // reveal toggle
+  var sw=$('#reveal');
+  function setReveal(on){document.body.classList.toggle('reveal',on);sw.setAttribute('aria-checked',on?'true':'false');try{localStorage.setItem('sb-reveal',on?'1':'0')}catch(e){}}
+  sw.addEventListener('click',function(){setReveal(sw.getAttribute('aria-checked')!=='true')});
+  try{if(localStorage.getItem('sb-reveal')==='1')setReveal(true)}catch(e){}
+
+  // ad video: voiceover accent
+  var vid=$('#adVideo'),vIn=$('#vIn'),vUs=$('#vUs');
+  function setVoice(us){vid.pause();vid.src=us?'/ad-us.mp4':'/ad-india.mp4';vIn.setAttribute('aria-pressed',String(!us));vUs.setAttribute('aria-pressed',String(us))}
+  vIn.onclick=function(){setVoice(false)};vUs.onclick=function(){setVoice(true)};
+
+  // jingle (hidden if the audio file fails to load)
+  var au=$('#jingle'),row=$('#audioRow'),ic=$('#jIcon');
+  row.hidden=false;au.addEventListener('error',function(){row.hidden=true});
+  $('#playJ').onclick=function(){if(au.paused){au.play().catch(function(){})}else au.pause()};
+  au.addEventListener('play',function(){ic.setAttribute('d','M6 5h4v14H6zM14 5h4v14h-4z')});
+  au.addEventListener('pause',function(){ic.setAttribute('d','M7 4.5v15l12-7.5z')});
+
+  // helper bot: answers only from the fact sheet
+  var facts=[
+    [['forever','never die','always alive','guarantee','promise'],"I wish! I can tell you when your plant is thirsty, but I can't water it for you, and plants also need sunlight and care. I won't promise something I can't do."],
+    [['water it','waters','water my','automatic','pump','for me','self-water'],"No, I can't water your plant by myself. My light tells you when it's thirsty, and you give it a drink."],
+    [['buy','price','cost','how much','₹','rupee','order','shop','sale','deliver','money'],"Not yet, and not ever! Sprout Buddy is a sample startup made by the Mindhop team to show what a child builds in Level 1. There's no price, no shop and no delivery date."],
+    [['colour','color','mint','yellow','sunshine','terracotta','green'],"I come in three colours: terracotta, mint green and sunshine yellow."],
+    [['app','phone','bluetooth','wifi','wi-fi','beep','notification'],"There's no app and no beeping. The light is the reminder."],
+    [['battery','charge','charging','usb','power'],"I don't have that information, so I won't guess. I only know what my makers told me."],
+    [['mood','face','happy','sleepy'],"I have a friendly face, and my mascot shows moods: happy, thirsty, excited, sleepy, thinking and waving."],
+    [['how','work','sensor','know','glow','light','detect'],"A little sensor in the soil checks how damp it is, all day long. When the soil gets too dry, my water-drop light glows blue. Water your plant and the light switches off."],
+    [['hi','hello','hey'],"Hi! Ask me how I work, what colours I come in, or try to trick me."]
+  ];
+  var log=$('#log'),chips=$('#chips');
+  function say(t,who){var d=document.createElement('div');d.className='msg '+who;d.textContent=t;log.appendChild(d);log.scrollTop=log.scrollHeight}
+  function answer(q){var s=q.toLowerCase();for(var i=0;i<facts.length;i++){for(var j=0;j<facts[i][0].length;j++){if(s.indexOf(facts[i][0][j])>-1)return facts[i][1]}}return "I only know about Sprout Buddy and keeping plants watered. Try one of the questions below!"}
+  function ask(q){if(!q.trim())return;say(q,'me');setTimeout(function(){say(answer(q),'bot')},450)}
+  ['How does it know my plant is thirsty?','Will it keep my plant alive forever?','Can I buy one?','Is there an app?'].forEach(function(q){var b=document.createElement('button');b.type='button';b.textContent=q;b.onclick=function(){ask(q)};chips.appendChild(b)});
+  $('#askForm').addEventListener('submit',function(e){e.preventDefault();var i=$('#askInput');ask(i.value);i.value=''});
+
+  // swatches + buy
+  [].forEach.call(document.querySelectorAll('#swatches button'),function(b,_,all){b.onclick=function(){[].forEach.call(document.querySelectorAll('#swatches button'),function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});var img=$('#buyImg');if(b.dataset.c==='Terracotta'){img.src='/sprout-buddy/img/hero2.webp';img.alt='Sprout Buddy in terracotta on a sunlit windowsill'}else{img.src='/sprout-buddy/img/colours.webp';img.alt='Sprout Buddy in terracotta, mint and sunshine yellow'}}});
+  var modal=$('#modal');
+  $('#buyBtn').onclick=function(){modal.hidden=false;$('#closeM').focus()};
+  $('#closeM').onclick=function(){modal.hidden=true;$('#buyBtn').focus()};
+  modal.addEventListener('click',function(e){if(e.target===modal)modal.hidden=true});
+  addEventListener('keydown',function(e){if(e.key==='Escape')modal.hidden=true});
+})();
+</script>

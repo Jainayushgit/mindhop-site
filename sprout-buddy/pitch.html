@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sprout Buddy Pitch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;700;800;900&family=Figtree:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap">
+<style>
+/* Layout: a 1600x900 slide canvas scaled to fit any screen; tap/swipe/arrow keys to move. Same tokens as the Sprout Buddy site; the Mindhop strip stays outside the slides. */
+:root{
+  --paper:#F5F9F2; --mint:#E3F2DF; --ink:#11281B; --ink-soft:#4B5F51; --line:#D3E3CF;
+  --clay:#DD6230; --leaf:#2E9A46; --drop:#3B82F6; --mh:#2440DF; --mh-deep:#162BA8; --sun:#FFD23F; --white:#fff;
+  --f-display:"Gabarito","Avenir Next","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Figtree","Segoe UI",system-ui,sans-serif;
+  --f-mh:"Bricolage Grotesque","Gabarito",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:#0B1A11;color:var(--paper);font-family:var(--f-body);overflow:hidden;-webkit-font-smoothing:antialiased;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+img{display:block;max-width:100%}
+button,a{font:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.app{height:100%;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px max(16px,env(safe-area-inset-left,0px));font-size:14px}
+.top a{color:rgba(245,249,242,.8);text-decoration:none}
+.top a:hover{color:var(--white)}
+.top .count{font-family:var(--f-display);font-weight:700;color:rgba(245,249,242,.6);font-variant-numeric:tabular-nums}
+.stagewrap{flex:1;min-height:0;display:grid;place-items:center;position:relative}
+.stage{width:1600px;height:900px;position:absolute;left:50%;top:50%;transform-origin:center;border-radius:28px;overflow:hidden;box-shadow:0 40px 90px -30px rgba(0,0,0,.6)}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .45s ease,visibility .45s;background:var(--paper);color:var(--ink)}
+.slide.on{opacity:1;visibility:visible}
+.slide h1,.slide h2{font-family:var(--f-display);margin:0;letter-spacing:-.035em;line-height:1;text-wrap:balance}
+.slide h2{font-size:92px;font-weight:900}
+.slide p{margin:0}
+.kick{font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:.14em;text-transform:uppercase;color:var(--leaf)}
+.big{font-size:32px;line-height:1.4;color:var(--ink-soft)}
+.pad{position:absolute;inset:0;padding:96px 110px 120px;display:flex;flex-direction:column;justify-content:center}
+.split{display:grid;grid-template-columns:1fr 1fr;height:100%}
+.split .txt{padding:96px 90px 96px 110px;display:flex;flex-direction:column;justify-content:center;gap:28px}
+.split .pic{background:var(--mint);overflow:hidden}
+.split .pic img{width:100%;height:100%;object-fit:cover}
+.foot{position:absolute;left:110px;right:110px;bottom:40px;display:flex;justify-content:space-between;font-size:18px;color:var(--ink-soft);font-family:var(--f-display);font-weight:600}
+.foot img{width:26px;display:inline-block;vertical-align:-6px;margin-right:8px}
+.dark{background:var(--ink);color:var(--paper)}
+.dark .big{color:rgba(245,249,242,.75)}
+.dark .foot{color:rgba(245,249,242,.55)}
+
+/* specific slides */
+.s-title img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.s-title .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(14,22,70,.88) 0%,rgba(14,22,70,.55) 45%,rgba(14,22,70,0) 75%)}
+.s-title .txt{position:absolute;left:110px;top:0;bottom:0;width:760px;display:flex;flex-direction:column;justify-content:center;gap:28px;color:var(--white)}
+.s-title h1{font-size:132px;font-weight:900}
+.s-title .big{color:rgba(255,255,255,.85)}
+.s-title .who{font-family:var(--f-display);font-weight:700;font-size:22px;color:var(--sun);letter-spacing:.1em;text-transform:uppercase}
+.s-problem img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.s-problem .shade{position:absolute;inset:0;background:linear-gradient(0deg,rgba(17,40,27,.86) 0%,rgba(17,40,27,.2) 60%)}
+.s-problem .txt{position:absolute;left:110px;right:110px;bottom:110px;color:var(--white);display:grid;gap:22px}
+.s-problem .big{color:rgba(255,255,255,.85);max-width:30em}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:56px}
+.steps div{background:var(--white);border:1px solid var(--line);border-radius:28px;padding:36px}
+.steps b{font-family:var(--f-display);font-size:22px;color:var(--leaf);font-weight:800}
+.steps h3{font-family:var(--f-display);font-size:40px;margin:14px 0 10px;letter-spacing:-.02em}
+.steps div{padding:44px}.steps h3{font-size:46px}.steps p{font-size:27px;line-height:1.4;color:var(--ink-soft)}
+.who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:56px}
+.who-grid div{border-top:3px solid var(--clay);padding-top:26px}
+.who-grid h3{font-family:var(--f-display);font-size:40px;margin:0 0 12px;letter-spacing:-.02em}
+.who-grid h3{font-size:46px}.who-grid p{font-size:27px;line-height:1.4;color:var(--ink-soft)}
+.brandrow{display:grid;grid-template-columns:300px 1fr;gap:56px;align-items:center;margin-top:48px}
+.brandrow .logo{background:var(--white);border-radius:32px;aspect-ratio:1;display:grid;place-items:center}
+.brandrow .logo img{width:62%}
+.chipsrow{display:flex;gap:16px;margin-top:20px}
+.chipsrow span{display:flex;align-items:center;gap:12px;font-size:22px;font-weight:600;background:var(--white);border:1px solid var(--line);border-radius:999px;padding:10px 20px 10px 12px}
+.chipsrow i{width:30px;height:30px;border-radius:50%}
+.lyric{font-family:var(--f-display);font-weight:800;font-size:44px;letter-spacing:-.02em;line-height:1.15;color:var(--clay)}
+.money{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:64px;border-top:1px solid rgba(245,249,242,.18)}
+.money div{padding:40px 40px 0 0}
+.money div+div{padding-left:40px;border-left:1px solid rgba(245,249,242,.18)}
+.money b{font-family:var(--f-display);font-weight:900;font-size:120px;letter-spacing:-.04em;line-height:1;display:block;font-variant-numeric:tabular-nums}
+.money span{font-size:26px;color:rgba(245,249,242,.7)}
+.money .g b{color:var(--sun)}
+.ask-n{font-family:var(--f-display);font-weight:900;font-size:220px;letter-spacing:-.05em;line-height:.9;color:var(--clay)}
+.uses{display:grid;gap:18px;font-size:28px;color:var(--ink-soft);margin-top:10px}
+.uses b{color:var(--ink);font-family:var(--f-display)}
+.s-mh{background:var(--mh);color:var(--white)}
+.s-mh h2{font-family:var(--f-mh);font-weight:800;color:var(--white)}
+.s-mh .big{color:rgba(255,255,255,.85);max-width:28em}
+.s-mh .acts{display:flex;gap:18px;margin-top:20px;align-items:center}
+.s-mh .acts a{font-family:var(--f-mh);font-weight:800;font-size:28px;text-decoration:none;border-radius:999px;padding:22px 36px}
+.s-mh .a1{background:var(--sun);color:var(--mh-deep)}
+.s-mh .a2{color:var(--white);border:2px solid rgba(255,255,255,.45)}
+.s-mh .num{font-size:24px;color:rgba(255,255,255,.8);user-select:all}
+.s-mh .kick{color:var(--sun);font-family:var(--f-mh)}
+
+/* controls */
+.ctrl{display:flex;align-items:center;justify-content:center;gap:14px;padding:12px max(16px,env(safe-area-inset-left,0px)) 14px}
+.ctrl button{width:48px;height:48px;border-radius:50%;border:1px solid rgba(245,249,242,.25);background:transparent;color:var(--paper);display:grid;place-items:center;cursor:pointer}
+.ctrl button:hover{background:rgba(245,249,242,.08)}
+.dots{display:flex;gap:8px}
+.dots button{width:10px;height:10px;padding:0;border-radius:50%;border:0;background:rgba(245,249,242,.3)}
+.dots button.on{background:var(--sun);width:26px;border-radius:999px}
+.mhstrip{display:flex;align-items:center;justify-content:center;gap:10px 16px;flex-wrap:wrap;background:var(--mh);color:var(--white);font-family:var(--f-mh);font-weight:600;font-size:14px;padding:10px max(16px,env(safe-area-inset-left,0px))}
+.mhstrip a{background:var(--sun);color:var(--mh-deep);font-weight:800;text-decoration:none;border-radius:999px;padding:6px 14px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top"><a href="/sprout-buddy">← Sprout Buddy website</a><span class="count" id="count">1 / 9</span></div>
+  <div class="stagewrap" id="wrap">
+    <div class="stage" id="stage" aria-roledescription="slideshow">
+
+      <section class="slide s-title on" aria-label="Slide 1">
+        <img class="bg" src="/sprout-buddy/img/stage.webp" alt="Sprout Buddy on a spotlit Investor Day stage with a judges' table in front">
+        <div class="shade"></div>
+        <div class="txt"><p class="who">Investor Day · Mindhop Level 1</p><h1>Sprout Buddy</h1><p class="big">The smart pot that tells you when your plant is thirsty.</p></div>
+      </section>
+
+      <section class="slide s-problem" aria-label="Slide 2">
+        <img src="/sprout-buddy/img/ad1.webp" alt="A drooping houseplant on a grey windowsill">
+        <div class="shade"></div>
+        <div class="txt"><p class="kick" style="color:var(--sun)">The problem</p><h2 style="color:#fff">Plants die from guessing.</h2><p class="big">My mum's plants kept dying. Not because she didn't care. She just never knew when to water them. Soil looks the same wet or dry.</p></div>
+      </section>
+
+      <section class="slide" aria-label="Slide 3">
+        <div class="split"><div class="txt"><p class="kick">Our solution</p><h2>A pot that glows when it's thirsty.</h2><p class="big">Sprout Buddy checks the soil all day. When it gets dry, a water-drop light turns blue. No app. No guessing.</p></div><div class="pic"><img src="/sprout-buddy/img/hero.webp" alt="Sprout Buddy on a sunny windowsill, its light glowing"></div></div>
+      </section>
+
+      <section class="slide" aria-label="Slide 4">
+        <div class="pad"><p class="kick">How it works</p><h2 style="margin-top:20px">Three things happen.</h2>
+          <div class="steps"><div><b>1</b><h3>It checks</h3><p>A sensor in the base measures how damp the soil is.</p></div><div><b>2</b><h3>It glows</h3><p>Dry soil switches on the blue water-drop light.</p></div><div><b>3</b><h3>You water</h3><p>The light goes off and Sprout Buddy smiles.</p></div></div>
+        </div>
+        <div class="foot"><span><img src="/sprout-buddy/img/logo.png" alt="">Sprout Buddy</span><span>4</span></div>
+      </section>
+
+      <section class="slide" aria-label="Slide 5">
+        <div class="pad"><p class="kick">Who it's for</p><h2 style="margin-top:20px">People who love plants but forget them.</h2>
+          <div class="who-grid"><div><h3>Kids</h3><p>Their first plant, with a face they can read.</p></div><div><h3>Families</h3><p>Houseplants everyone forgets. No app, no beeping.</p></div><div><h3>First-time plant owners</h3><p>Anyone who's ever asked, "Should I water it today?"</p></div></div>
+        </div>
+        <div class="foot"><span><img src="/sprout-buddy/img/logo.png" alt="">Sprout Buddy</span><span>5</span></div>
+      </section>
+
+      <section class="slide" aria-label="Slide 6">
+        <div class="pad"><p class="kick">Our brand</p><h2 style="margin-top:20px">Friendly, bright, a little bit silly.</h2>
+          <div class="brandrow"><div class="logo"><img src="/sprout-buddy/img/logo.png" alt="Sprout Buddy logo: a smiling pot with a two-leaf sprout"></div>
+            <div><p class="lyric">"Sprout Buddy, never forget,<br>your plant's best friend yet!"</p><p class="big" style="margin-top:14px">Our jingle, our ad and our helper bot all sound like a cheerful friend.</p>
+              <div class="chipsrow"><span><i style="background:#D9673A"></i>Terracotta</span><span><i style="background:#A9DCC0"></i>Mint</span><span><i style="background:#F4C83A"></i>Sunshine</span></div></div></div>
+        </div>
+        <div class="foot"><span><img src="/sprout-buddy/img/logo.png" alt="">Sprout Buddy</span><span>6</span></div>
+      </section>
+
+      <section class="slide dark" aria-label="Slide 7">
+        <div class="pad"><p class="kick" style="color:var(--sun)">What we learned from customers</p><h2 style="margin-top:20px;color:var(--paper)">Nobody wanted another app.</h2>
+          <div class="money"><div><b>3</b><span>customer interviews before we built anything</span></div><div><b>1</b><span>problem they all had: not knowing when to water</span></div><div class="g"><b>0</b><span>apps to install. The light is the reminder.</span></div></div>
+        </div>
+        <div class="foot"><span>From Class 4: interviews with AI-played customers</span><span>7</span></div>
+      </section>
+
+      <section class="slide" aria-label="Slide 8">
+        <div class="split"><div class="txt"><p class="kick">Our ask</p><h2>Help us make our first batch.</h2><div class="uses"><p>We'd give the first pots to <b>families with houseplants</b> and kids with their first plant.</p><p>Then we'd ask them one question: <b>did your plant stay happy?</b></p></div></div><div class="pic"><img src="/sprout-buddy/img/colours.webp" alt="Sprout Buddy in terracotta, mint and sunshine yellow" style="object-position:center"></div></div>
+      </section>
+
+      <section class="slide s-mh" aria-label="Slide 9">
+        <div class="pad" style="display:flex;flex-direction:column;justify-content:center;gap:28px"><p class="kick">Made in Mindhop Level 1 · Create with AI</p><h2>Your child makes a pitch like this.</h2><p class="big">Ages 9 to 13, live 1:1. In Class 7 your child builds pitch slides with AI and practises against an AI playing a tough investor. In Class 8, Investor Day, they pitch to you live. Sprout Buddy is a sample our team made the way a student would.</p>
+          <div class="acts"><a class="a1" href="https://wa.me/916363575529?text=Hi%20Mindhop!%20I%27d%20like%20to%20book%20a%20free%20class%20for%20my%20child." target="_blank" rel="noopener">Book a free class</a><span class="num">WhatsApp +91 6363 575 529</span></div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+  <div class="ctrl"><button type="button" id="prev" aria-label="Previous slide"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="dots" id="dots"></div><button type="button" id="next" aria-label="Next slide"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+  <div class="mhstrip"><span>A sample pitch from Mindhop's Level 1 for ages 9–13 · Made in Class 7</span><a href="https://wa.me/916363575529?text=Hi%20Mindhop!%20I%27d%20like%20to%20book%20a%20free%20class%20for%20my%20child." target="_blank" rel="noopener">Book a free class</a></div>
+</div>
+<script>
+(function(){
+  var stage=document.getElementById('stage'),wrap=document.getElementById('wrap');
+  var slides=[].slice.call(document.querySelectorAll('.slide')),i=0,dots=document.getElementById('dots'),count=document.getElementById('count');
+  function fit(){var w=wrap.clientWidth-24,h=wrap.clientHeight-12,s=Math.min(w/1600,h/900);stage.style.transform='translate(-50%,-50%) scale('+s+')'}
+  slides.forEach(function(_,k){var b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Go to slide '+(k+1));b.onclick=function(){go(k)};dots.appendChild(b)});
+  function go(k){i=Math.max(0,Math.min(slides.length-1,k));slides.forEach(function(s,n){s.classList.toggle('on',n===i);s.setAttribute('aria-hidden',n===i?'false':'true')});[].forEach.call(dots.children,function(d,n){d.classList.toggle('on',n===i)});count.textContent=(i+1)+' / '+slides.length;try{history.replaceState(null,'','#s'+(i+1))}catch(e){}}
+  document.getElementById('prev').onclick=function(){go(i-1)};document.getElementById('next').onclick=function(){go(i+1)};
+  addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'||e.key==='PageUp'){go(i-1)}});
+  var sx=null;wrap.addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});wrap.addEventListener('touchend',function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40)go(i+(dx<0?1:-1));sx=null});
+  wrap.addEventListener('click',function(e){if(e.target.closest('a,button'))return;var r=wrap.getBoundingClientRect();go(i+(e.clientX>r.left+r.width/3?1:-1))});
+  addEventListener('resize',fit);fit();
+  var m=/^#s(\d+)$/.exec(location.hash);go(m?+m[1]-1:0);
+})();
+</script>
+</body>
+</html>
