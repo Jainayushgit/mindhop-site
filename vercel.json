@@ -1,0 +1,4 @@
+{
+  "cleanUrls": true,
+  "headers": [{"source": "/(.*)\\.(mp4|mp3|webp|jpg|svg)", "headers": [{"key": "Cache-Control", "value": "public, max-age=604800"}]}]
+}
