@@ -252,6 +252,25 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .trust h2{font:800 clamp(26px,3vw,34px)/1.1 var(--mh-display);letter-spacing:-.02em;margin-bottom:18px}
 
 /* ---------- book ---------- */
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.price .wrap{padding-block:8px 72px;display:grid;gap:18px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:900px){.price .wrap{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:stretch}}
+.price-card{background:var(--ink);color:var(--white);border-radius:24px;padding:26px 24px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.price-card .was{margin-top:14px;display:flex;align-items:center;gap:12px;font-size:24px;color:#A8A69E}
+.price-card .off{background:var(--sun);color:var(--ink);border-radius:999px;padding:3px 12px;font:800 16px/1.3 var(--mh-display)}
+.price-card .now{font:800 clamp(52px,7vw,72px)/1 var(--mh-display);letter-spacing:-.03em}
+.price-card .until{color:var(--sun);font-size:16px;margin-top:6px}
+.price-card .small{color:#D3D1C7;font-size:15px;margin-top:6px}
+.refund{background:var(--sun);border-radius:28px;padding:28px 26px;display:flex;flex-direction:column;gap:16px}
+.refund-top{display:flex;align-items:center;gap:12px}
+.shield{width:48px;height:48px;border-radius:14px;background:var(--ink);display:grid;place-items:center;flex:none}
+.refund-h{font:800 clamp(32px,4.4vw,50px)/1.02 var(--mh-display);letter-spacing:-.025em}
+.refund-rows{display:flex;flex-direction:column;gap:10px}
+.refund-row{background:var(--white);border-radius:18px;padding:16px 18px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.refund-row b{font:800 clamp(20px,2.4vw,26px)/1.1 var(--mh-display);letter-spacing:-.01em}
+.pill{border-radius:999px;padding:6px 12px;font:800 14px/1.2 var(--mh-display);color:var(--white);white-space:nowrap}
+.pill-cobalt{background:var(--cobalt)}.pill-ink{background:var(--ink)}
+.refund .small{font-size:15px;color:#3D3D3D}
 .book{background:var(--cobalt);color:var(--white)}
 .book .wrap{padding-block:64px;display:grid;gap:28px;grid-template-columns:minmax(0,1fr);align-items:center}
 @media (min-width:900px){.book .wrap{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)}}
@@ -284,15 +303,16 @@ footer .logo{height:22px;width:auto}
       <span class="sticker st-lilac tilt-l">Live 1:1</span>
     </div>
     <h1>Your child will build and pitch their own <span class="mark">startup</span> in 4 weeks.</h1>
-    <p class="lede">Using AI to create a brand, a website, a jingle, a helper bot and a launch ad, then pitching it live on Investor Day. Here is one we made the way a student would, so you can see and hear the real thing.</p>
+    <p class="lede">Using AI to create a brand, a website, a jingle, a helper bot and a launch ad, then pitching it live on Investor Day. Meet Anshika, an example Class 7 student from Andheri, Mumbai, and see and hear the startup she builds.</p>
     <div class="ctas">
       <a class="btn btn-cobalt" href="#book">Book a free class</a>
       <a class="btn btn-line" href="#build">See it class by class</a>
+      <a class="btn btn-line" href="#price">Price and refund</a>
     </div>
   </div>
 
   <figure class="ad" aria-label="Sprout Buddy launch ad">
-    <span class="sticker st-sun tilt-l tag">Sample startup: Sprout Buddy</span>
+    <span class="sticker st-sun tilt-l tag">Anshika's startup: Sprout Buddy</span>
     <div class="ad-frame">
       <video id="adVideo" controls playsinline preload="metadata" poster="img/ad-endcard.webp" src="ad-india.mp4" width="1920" height="1080"></video>
     </div>
@@ -326,9 +346,9 @@ footer .logo{height:22px;width:auto}
 
 <section class="intro" id="build"><div class="wrap">
   <span class="eyebrow">What your child makes</span>
-  <h2>Meet Sprout Buddy, one class at a time.</h2>
-  <p>Our team built this sample by following the course, step by step. Your child invents their own product. Under each piece you'll find the kind of prompt a student writes, the AI judgment they learn that day, and where you come in.</p>
-  <div class="ctas" style="margin-top:8px"><a class="btn btn-cobalt" href="/sprout-buddy">Open Sprout Buddy's website</a><a class="btn btn-line" href="/sprout-buddy/pitch">See the Investor Day pitch</a></div>
+  <h2>Meet Anshika, one class at a time.</h2>
+  <p>Anshika is an example student: 12, Class 7, Andheri, Mumbai. She kept forgetting to water the plants on her balcony, so her startup is Sprout Buddy, a pot that tells you when it's thirsty. Our team built Sprout Buddy by following the course step by step, the way she would. Your child invents their own product. Under each piece you'll find the kind of prompt a student writes, the AI judgment they learn that day, and where you come in.</p>
+  <div class="ctas" style="margin-top:8px"><a class="btn btn-cobalt" href="/sprout-buddy">Open Anshika's website</a><a class="btn btn-line" href="/sprout-buddy/pitch">See the Investor Day pitch</a></div>
 </div></section>
 
 <section class="stops"><div class="wrap">
@@ -339,9 +359,9 @@ footer .logo{height:22px;width:auto}
     <div class="rail"><span class="eyebrow">Free first class</span><h3>Invent it</h3><p>In 45 minutes your child invents a product and sees it come to life on a first website.</p></div>
     <div class="body">
       <div class="sb">
-        <span class="sb-cap">Where Sprout Buddy started</span>
+        <span class="sb-cap">Where Anshika started</span>
         <p class="quote">"A pot that tells you when your plant is <span>thirsty</span>."</p>
-        <p class="soft">One sentence from a kid whose family's plant kept dying. Everything below grows from it.</p>
+        <p class="soft">Anshika's first sentence, after her balcony plants kept drying out. Everything below grows from it.</p>
       </div>
     </div>
   </article>
@@ -546,14 +566,34 @@ footer .logo{height:22px;width:auto}
     <div class="trust-item"><b>A real tutor, every class</b><span>Live and 1:1, 45 minutes, twice a week. AI helps; a person teaches.</span></div>
     <div class="trust-item"><b>You see everything</b><span>Every prompt your child writes and everything they make is visible to you.</span></div>
     <div class="trust-item"><b>Private until you share</b><span>Your child's website stays unlisted. You decide who sees it.</span></div>
-    <div class="trust-item"><b>Fair to cancel</b><span>Full refund any time before Class 3, then pro-rata.</span></div>
+    <div class="trust-item"><b>Taught by the founders</b><span>Early classes are taught by Mindhop's founding team, the people who designed the course.</span></div>
+  </div>
+</div></section>
+
+<section class="price" id="price" aria-labelledby="ph"><div class="wrap">
+  <h2 id="ph" class="vh">Price and refund promise</h2>
+  <div class="price-card">
+    <span class="sticker st-sun tilt-l">Founding batch price</span>
+    <p class="was"><s>₹24,000</s> <span class="off">33% off</span></p>
+    <p class="now">₹15,999</p>
+    <p class="until">For families who enrol by 30 November. After that, ₹24,000.</p>
+    <p class="small">Level 1, all 8 live classes. About ₹2,000 per live 1:1 class. One payment, no EMIs, no lock-in. The first class is free.</p>
+  </div>
+  <div class="refund">
+    <div class="refund-top"><span class="shield" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFD23F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span><span class="eyebrow" style="color:var(--ink)">Our refund promise</span></div>
+    <p class="refund-h">Change your mind? Get your money back.</p>
+    <div class="refund-rows">
+      <div class="refund-row"><span class="pill pill-cobalt">Before Class 3</span><b>Full refund.</b></div>
+      <div class="refund-row"><span class="pill pill-ink">After that</span><b>Pay only for classes used.</b></div>
+    </div>
+    <p class="small">A class counts as used if your child attended it, or missed it without 24 hours' notice.</p>
   </div>
 </div></section>
 
 <section class="book" id="book"><div class="wrap">
   <div>
     <h2>Start with a free class.</h2>
-    <p>In 45 minutes your child invents a product and builds its first website. No payment, no commitment.</p>
+    <p>In 45 minutes your child invents a product and builds its first website. No payment, no commitment. Founding batch price ends 30 November.</p>
     <ul class="facts"><li>Ages 9–13</li><li>Live 1:1</li><li>4 weeks</li><li>Ends on Investor Day</li></ul>
   </div>
   <div class="book-act">
@@ -565,7 +605,7 @@ footer .logo{height:22px;width:auto}
 
 <footer><div class="wrap">
   <img class="logo" src="img/mindhop-white.svg" alt="Mindhop" width="146" height="22">
-  <span>Sprout Buddy is a sample startup made by the Mindhop team. Its images, music and voice were made with AI tools.</span>
+  <span>Anshika is an example student. Sprout Buddy is a sample startup made by the Mindhop team, and its images, music and voice were made with AI tools.</span>
 </div></footer>
 
 
