@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Book a free AI class · Young Turings</title>
+<meta name="description" content="Book your child's free 45-minute live AI class. Ages 9–13. They invent a product and build its first website.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/yt-favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/brand.css">
+<style>
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:32px;padding:12px 0 48px;align-items:start}
+@media(max-width:860px){.hero{grid-template-columns:1fr;gap:20px}}
+.pitch{display:flex;flex-direction:column;gap:16px;position:sticky;top:20px}
+@media(max-width:860px){.pitch{position:static}}
+.pitch h1{font-weight:800;font-size:clamp(34px,4.6vw,52px);line-height:1.02;letter-spacing:-.025em}
+.pitch .lede{color:var(--ink-2);font-size:18px;margin:0}
+.facts{display:flex;flex-wrap:wrap;gap:8px}
+.facts span{background:#fff;border-radius:999px;padding:7px 13px;font:600 14px var(--body);box-shadow:inset 0 0 0 1.5px var(--line)}
+.card{background:#fff;border-radius:22px;padding:18px 20px;box-shadow:inset 0 0 0 1.5px var(--line)}
+.card h3{font-size:18px;margin-bottom:8px}
+.card ol{margin:0;padding-left:20px;color:var(--ink-2);font-size:16px}
+.card ol li{margin:4px 0}
+.promise{background:var(--sun);border-radius:22px;padding:18px 20px}
+.promise h3{font-size:20px;margin-bottom:6px}
+.promise p{margin:0;font-size:15px;color:#3D3D3D}
+.cal-shell{background:#fff;border-radius:24px;box-shadow:inset 0 0 0 1.5px var(--line);min-height:640px;overflow:hidden}
+#cal{width:100%;min-height:640px}
+.fallback{font-size:15px;color:var(--ink-2);margin-top:12px}
+.loading{display:grid;place-items:center;min-height:640px;color:var(--ink-2);font-size:15px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/"><span class="tape" aria-hidden="true"><i></i><i></i><i></i></span><b>Young Turings</b></a>
+    <span class="sticker">First class free</span>
+  </header>
+
+  <main class="hero">
+    <section class="pitch">
+      <p class="eyebrow">Free live AI class · ages 9–13</p>
+      <h1 id="headline">Book your child's free AI class</h1>
+      <p class="lede" id="lede">In 45 minutes your child invents a product and builds its first website with AI. Live, 1:1, with a real tutor. No payment, no commitment.</p>
+      <div class="facts"><span>45 minutes</span><span>Live 1:1</span><span>Online</span><span>Ages 9–13</span></div>
+      <div class="card">
+        <h3>What happens in the class</h3>
+        <ol>
+          <li>Your child picks a problem they care about and invents a product for it.</li>
+          <li>They build the product's website with AI, guided by the tutor.</li>
+          <li>You join for the last few minutes to see what they made.</li>
+        </ol>
+      </div>
+      <div class="promise">
+        <h3>Our refund promise</h3>
+        <p>If you enrol and change your mind before Class 3, you get a full refund. After that, you pay only for the classes your child used.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="cal-shell"><div id="cal"><div class="loading">Loading available times…</div></div></div>
+      <p class="fallback">Trouble booking? <a id="wa" href="#" target="_blank" rel="noopener">Message us on WhatsApp</a> and we'll find a time for you.</p>
+    </section>
+  </main>
+</div>
+
+<script src="/config.js"></script>
+<script>
+(function(){
+  var q = new URLSearchParams(location.search);
+  var name = (q.get('name')||'').trim(), phone = (q.get('phone')||'').replace(/[^\d+]/g,''),
+      child = (q.get('child')||'').trim(), lead = (q.get('lead')||'').trim();
+  if (phone && phone[0] !== '+') phone = '+' + (phone.length === 10 ? '91' + phone : phone);
+
+  if (child) {
+    document.getElementById('headline').textContent = 'Book ' + child + "'s free AI class";
+    document.title = 'Book ' + child + "'s free AI class · Young Turings";
+  }
+  var waText = 'Hi Young Turings! I’d like to book a free class' + (child ? ' for ' + child : ' for my child') + '.';
+  document.getElementById('wa').href = 'https://wa.me/' + YT.WHATSAPP + '?text=' + encodeURIComponent(waText);
+
+  if (!YT.CAL_LINK || YT.CAL_LINK.indexOf('REPLACE') === 0) {
+    document.getElementById('cal').innerHTML = '<div class="loading">Booking opens shortly. Please use WhatsApp below for now.</div>';
+    return;
+  }
+
+  (function (C, A, L) { var p = function (a, ar) { a.q.push(ar); }; var d = C.document; C.Cal = C.Cal || function () { var cal = C.Cal; var ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { var api = function () { p(api, arguments); }; var namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+
+  Cal("init", "yt", { origin: "https://app.cal.com" });
+  var config = { layout: "month_view", theme: "light" };
+  if (name) config.name = name;
+  if (phone) config.attendeePhoneNumber = phone;
+  if (child) config['child-name'] = child;
+  if (lead) config['metadata[lead]'] = lead;
+  config['metadata[source]'] = lead ? 'sales_link' : 'direct';
+  document.getElementById('cal').innerHTML = '';
+  Cal.ns.yt("inline", { elementOrSelector: "#cal", calLink: YT.CAL_LINK, config: config });
+  Cal.ns.yt("ui", { theme: "light", cssVarsPerTheme: { light: { "cal-brand": "#2B3BFF" } }, hideEventTypeDetails: false, layout: "month_view" });
+})();
+</script>
+</body>
+</html>

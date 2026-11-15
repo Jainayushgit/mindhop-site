@@ -1,4 +1,94 @@
 {
   "cleanUrls": true,
-  "headers": [{"source": "/(.*)\\.(mp4|mp3|webp|jpg|svg)", "headers": [{"key": "Cache-Control", "value": "public, max-age=604800"}]}]
+  "headers": [
+    {
+      "source": "/(.*)\\.(mp4|mp3|webp|jpg|svg)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/sales(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/config.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "youngturing.com"
+        }
+      ],
+      "destination": "https://youngturings.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.youngturing.com"
+        }
+      ],
+      "destination": "https://youngturings.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.youngturings.com"
+        }
+      ],
+      "destination": "https://youngturings.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/sprout-buddy/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "youngturings.com"
+        }
+      ],
+      "destination": "/",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "youngturings.com"
+        }
+      ],
+      "destination": "/yt-home"
+    }
+  ]
 }
