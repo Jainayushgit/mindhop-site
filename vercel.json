@@ -78,17 +78,5 @@
       "destination": "/",
       "permanent": false
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "youngturings.com"
-        }
-      ],
-      "destination": "/yt-home"
-    }
   ]
 }
