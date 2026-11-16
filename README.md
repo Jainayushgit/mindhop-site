@@ -16,4 +16,6 @@ Live at **https://book.youngturings.com** (Vercel). The marketing site lives in 
 - Supabase project `jcnactgfjvcifqbrktut`: tables `leads`, `lead_events`, `team_members`. Sales Desk access = email in `team_members` (RLS `is_team()`).
 - Cal.com API key is in Supabase Vault as `CAL_API_KEY`.
 
+Logo files come from the official kit (young-turings-logo-files-v2) in `assets/logo/`, `assets/favicon.svg`, `favicon.ico`, `assets/apple-touch-icon.png` and `assets/avatar.png`. Never redraw or retype the logo.
+
 Static site, no build step. Push to `main` deploys.
