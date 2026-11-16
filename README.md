@@ -6,7 +6,7 @@ Live at **https://book.youngturings.com** (Vercel). The marketing site lives in 
 | Path | What it is |
 |---|---|
 | `/demo/` | Parent booking page. Cal.com inline embed, prefilled from `?n=parent&p=phone&c=child&a=age&l=leadId` |
-| `/sales/` | Sales Desk (team only). Save a lead, open WhatsApp with the booking link, track status |
+| `/sales/` | Sales Desk (team only). Save a lead, open WhatsApp with the booking link, track status. **Import leads** from CSV/Excel (`assets/import.js`, template at `/assets/leads-template.csv`) |
 | `/` | Redirects to youngturings.com (and forwards Supabase sign-in links to `/sales/`) |
 | `/sprout-buddy/` | Example student startup site (sales artefact) |
 

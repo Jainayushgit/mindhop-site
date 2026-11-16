@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="/assets/site.css">
 <script src="/assets/config.js"></script>
 <script src="/assets/supabase-2.119.0.js"></script>
+<script src="/assets/import.js"></script>
 <style>
 .desk{display:grid;gap:20px;grid-template-columns:minmax(0,380px) minmax(0,1fr);align-items:start}
 @media (max-width:820px){.desk{grid-template-columns:1fr}.grid2{grid-template-columns:1fr 1fr}}
@@ -60,6 +61,7 @@
 
   <!-- Desk -->
   <div id="desk" class="desk hide">
+    <div style="display:grid;gap:20px">
     <section class="card">
       <h2>Send a booking link</h2>
       <form id="leadForm" autocomplete="off">
@@ -80,6 +82,27 @@
         <p class="msg" id="leadMsg" aria-live="polite"></p>
       </form>
     </section>
+
+    <section class="card" id="importCard">
+      <h2>Import leads</h2>
+      <p class="muted" style="margin-top:0">Upload a CSV or Excel file with a heading row. Only the phone column is required. Leads come in as "New"; numbers already in the list are skipped. <a href="/assets/leads-template.csv" download>Download a template</a></p>
+      <div class="field"><label for="iFile">File (.csv, .xlsx, .xls)</label><input id="iFile" type="file" accept=".csv,.xlsx,.xls,text/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"></div>
+      <p class="msg" id="iMsg" aria-live="polite"></p>
+      <div id="iStep2" class="hide">
+        <div class="field"><label>If a row has no country, assume</label>
+          <div class="seg">
+            <label><input type="radio" name="imarket" value="IN" checked><span>India</span></label>
+            <label><input type="radio" name="imarket" value="US"><span>US</span></label>
+          </div>
+        </div>
+        <div class="field"><label for="isrc">Source for this list <span class="muted">(optional)</span></label><input id="isrc" placeholder="e.g. DPS parents list, Nov"></div>
+        <details open style="margin-bottom:12px"><summary class="muted" style="cursor:pointer;margin-bottom:10px">Columns (auto-detected)</summary><div id="iMap"></div></details>
+        <p class="msg" id="iSummary" aria-live="polite"></p>
+        <div id="iPreview" style="margin-bottom:12px"></div>
+        <button class="btn" type="button" id="iGo" style="width:100%" disabled>Import</button>
+      </div>
+    </section>
+    </div>
 
     <section class="card">
       <div class="toolbar">
@@ -130,6 +153,7 @@ async function boot() {
   show('desk');
   YT.STATUSES.forEach(s => $('filter').insertAdjacentHTML('beforeend', `<option value="${s}">${YT.STATUS_LABEL[s]}</option>`));
   await load();
+  initImport();
   sb.channel('leads').on('postgres_changes', { event: '*', schema: 'public', table: 'leads' }, load).subscribe();
 }
 function show(id) { ['login', 'denied', 'desk'].forEach(x => $(x).classList.toggle('hide', x !== id)); }
