@@ -33,5 +33,27 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/sprout-buddy/pitch{/}?",
+      "destination": "https://youngturings.com/sprout-buddy/pitch.html",
+      "permanent": false
+    },
+    {
+      "source": "/sprout-buddy/pitch.html",
+      "destination": "https://youngturings.com/sprout-buddy/pitch.html",
+      "permanent": false
+    },
+    {
+      "source": "/sprout-buddy{/}?",
+      "destination": "https://youngturings.com/sprout-buddy/",
+      "permanent": false
+    },
+    {
+      "source": "/sprout-buddy/index.html",
+      "destination": "https://youngturings.com/sprout-buddy/",
+      "permanent": false
+    }
   ]
 }

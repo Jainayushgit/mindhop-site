@@ -71,11 +71,11 @@
       <p class="muted" style="margin-top:-4px">Show these on the call or send them on WhatsApp.</p>
       <div class="kit">
         <div><b>Sample startup website</b><div class="muted">Sprout Buddy: what a child builds in Level 1</div></div>
-        <div class="acts"><a class="btn" href="/sprout-buddy/" target="_blank" rel="noopener">Open</a><button class="btn ghost" type="button" data-kit="/sprout-buddy/">Copy link</button></div>
+        <div class="acts"><a class="btn" href="https://youngturings.com/sprout-buddy/" target="_blank" rel="noopener">Open</a><button class="btn ghost" type="button" data-kit="https://youngturings.com/sprout-buddy/">Copy link</button></div>
       </div>
       <div class="kit">
         <div><b>Investor Day pitch deck</b><div class="muted">The deck the child presents at the end of Level 1</div></div>
-        <div class="acts"><a class="btn" href="/sprout-buddy/pitch/" target="_blank" rel="noopener">Open</a><button class="btn ghost" type="button" data-kit="/sprout-buddy/pitch/">Copy link</button></div>
+        <div class="acts"><a class="btn" href="https://youngturings.com/sprout-buddy/pitch.html" target="_blank" rel="noopener">Open</a><button class="btn ghost" type="button" data-kit="https://youngturings.com/sprout-buddy/pitch.html">Copy link</button></div>
       </div>
     </section>
     <section class="card">
@@ -209,7 +209,7 @@ $('list').addEventListener('click', async (e) => {
   }
 });
 document.querySelectorAll('[data-kit]').forEach(b => b.addEventListener('click', async () => {
-  await navigator.clipboard.writeText(YT.SITE + b.dataset.kit); b.textContent = 'Copied'; setTimeout(() => b.textContent = 'Copy link', 1500);
+  await navigator.clipboard.writeText(b.dataset.kit); b.textContent = 'Copied'; setTimeout(() => b.textContent = 'Copy link', 1500);
 }));
 $('filter').addEventListener('change', render);
 $('search').addEventListener('input', render);
