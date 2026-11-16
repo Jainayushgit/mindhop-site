@@ -2,188 +2,200 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sales Desk · Young Turings</title>
 <meta name="robots" content="noindex,nofollow">
-<link rel="icon" href="/yt-favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/brand.css">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-body{font-size:16px}
-.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:18px 0}
-.bar .who{font-size:14px;color:var(--ink-2);display:flex;gap:10px;align-items:center}
-.linkish{background:none;border:0;color:var(--cobalt);font:600 14px var(--body);cursor:pointer;padding:0}
-.funnel{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:4px 0 18px}
-@media(max-width:760px){.funnel{grid-template-columns:repeat(4,minmax(0,1fr))}}
-.stage{background:#fff;border-radius:16px;padding:12px 14px;box-shadow:inset 0 0 0 1.5px var(--line);cursor:pointer;text-align:left;border:0;font:inherit;color:inherit}
-.stage.on{box-shadow:inset 0 0 0 2px var(--cobalt);background:var(--lilac)}
-.stage b{display:block;font:800 26px/1 var(--display)}
-.stage span{font-size:13px;color:var(--ink-2)}
-.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
-.tools input{flex:1;min-width:200px}
-input,select,textarea{font:inherit;border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;background:#fff;color:var(--ink);min-height:46px}
-input:focus,select:focus{border-color:var(--cobalt);outline:none}
-.list{display:flex;flex-direction:column;gap:10px;padding-bottom:60px}
-.lead{background:#fff;border-radius:18px;padding:14px 16px;box-shadow:inset 0 0 0 1.5px var(--line);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 16px;align-items:center}
-@media(max-width:640px){.lead{grid-template-columns:1fr}}
-.lead h3{font-size:18px}
-.meta{font-size:14px;color:var(--ink-2);display:flex;gap:12px;flex-wrap:wrap}
-.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.acts .btn{min-height:42px;padding:0 16px;font-size:15px}
-.acts select{min-height:42px;padding:6px 10px;font-size:14px}
-.pill{display:inline-block;border-radius:999px;padding:3px 10px;font:700 12px var(--body);background:var(--lilac);color:var(--cobalt-ink)}
-.pill.booked,.pill.showed{background:#E3F6E5;color:#1F6A2B}.pill.paid{background:var(--sun);color:var(--ink)}.pill.lost{background:#F1EEE7;color:#777}
-dialog{border:0;border-radius:22px;padding:22px;max-width:420px;width:calc(100% - 32px)}
-dialog::backdrop{background:rgba(20,20,20,.35)}
-dialog form{display:flex;flex-direction:column;gap:10px}
-dialog h2{font-size:22px;margin-bottom:4px}
-.gate{max-width:420px;margin:12vh auto;background:#fff;border-radius:24px;padding:28px;box-shadow:inset 0 0 0 1.5px var(--line);display:flex;flex-direction:column;gap:12px}
-.gate h1{font-size:28px}
-.muted{color:var(--ink-2);font-size:14px;margin:0}
-.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:12px;padding:11px 16px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none}
-.toast.show{opacity:1}
-.empty{color:var(--ink-2);text-align:center;padding:40px 0}
+.desk{display:grid;gap:20px;grid-template-columns:minmax(0,380px) minmax(0,1fr);align-items:start}
+@media (max-width:820px){.desk{grid-template-columns:1fr}.grid2{grid-template-columns:1fr 1fr}}
+.seg{display:flex;gap:6px}.seg label{flex:1;margin:0}
+.seg input{position:absolute;opacity:0;width:1px;height:1px}
+.seg span{display:flex;align-items:center;justify-content:center;min-height:44px;border:1.5px solid var(--line);border-radius:12px;font-weight:700;color:var(--ink);cursor:pointer;background:var(--white)}
+.seg input:checked+span{border-color:var(--cobalt);background:var(--lilac);color:var(--cobalt-ink)}
+.seg input:focus-visible+span{outline:3px solid var(--cobalt);outline-offset:2px}
+.lead{border-top:1px solid var(--line);padding:14px 0;display:grid;gap:8px;grid-template-columns:1fr auto;align-items:center}
+.lead:first-child{border-top:0}
+.lead .who b{font-family:var(--display);font-size:17px}
+.lead .meta{font-size:14px;color:var(--ink-2)}
+.lead select{min-height:40px;width:auto;font-size:14px;padding:6px 10px}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--lilac);color:var(--cobalt-ink)}
+.pill.booked{background:var(--sun);color:var(--ink)}
+.acts{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+.acts .btn{min-height:38px;padding:0 14px;font-size:14px}
+.toolbar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap}
+.toolbar select,.toolbar input{width:auto;min-height:40px;font-size:14px}
+.msg{margin-top:10px;font-size:14px}
+.err{color:#B00020}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header class="bar">
-    <a class="brand" href="/sales"><span class="tape" aria-hidden="true"><i></i><i></i><i></i></span><b>Sales Desk</b></a>
-    <div class="who" id="who" hidden><span id="whoEmail"></span><button class="linkish" id="signOut">Sign out</button></div>
-  </header>
+<header class="wrap top">
+  <a class="brand" href="/sales/"><span class="tape" aria-hidden="true"><i></i><i></i><i></i></span><b>Young Turings</b></a>
+  <span><span class="sticker">Sales Desk</span> <button class="btn ghost hide" id="out" style="min-height:38px;padding:0 14px;font-size:14px">Sign out</button></span>
+</header>
 
-  <section id="gate" class="gate" hidden>
-    <h1>Sign in</h1>
-    <p class="muted">Team members only. We'll email you a sign-in link.</p>
-    <form id="loginForm" style="display:flex;flex-direction:column;gap:10px">
-      <input type="email" id="email" placeholder="you@youngturings.com" required autocomplete="email">
-      <button class="btn btn-cobalt" type="submit">Email me a link</button>
+<main class="wrap">
+  <!-- Sign in -->
+  <section id="login" class="card hide" style="max-width:440px">
+    <h2>Sign in</h2>
+    <p class="muted">Enter your team email. We'll send a sign-in link.</p>
+    <form id="loginForm">
+      <div class="field"><label for="em">Email</label><input id="em" type="email" required autocomplete="email"></div>
+      <button class="btn" type="submit">Send sign-in link</button>
+      <p class="msg" id="loginMsg" aria-live="polite"></p>
     </form>
-    <p class="muted" id="gateMsg"></p>
   </section>
 
-  <section id="app" hidden>
-    <div class="funnel" id="funnel"></div>
-    <div class="tools">
-      <input id="search" placeholder="Search name, child or phone" autocomplete="off">
-      <button class="btn btn-cobalt" id="addBtn">+ Add lead</button>
-    </div>
-    <div class="list" id="list"></div>
+  <section id="denied" class="card hide" style="max-width:440px">
+    <h2>Not on the team list</h2>
+    <p class="muted"><span id="deniedEmail"></span> isn't in the team. Ask Ayush to add you, then sign in again.</p>
   </section>
-</div>
 
-<dialog id="addDlg">
-  <form id="addForm" method="dialog">
-    <h2>Add lead</h2>
-    <input name="parent" placeholder="Parent name" required>
-    <input name="phone" placeholder="Phone (10 digits or with country code)" required inputmode="tel">
-    <input name="child" placeholder="Child's name (optional)">
-    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:6px">
-      <button class="btn btn-line" value="cancel" formnovalidate>Cancel</button>
-      <button class="btn btn-cobalt" value="ok" id="addSave">Save</button>
-    </div>
-  </form>
-</dialog>
-<div class="toast" id="toast"></div>
+  <!-- Desk -->
+  <div id="desk" class="desk hide">
+    <section class="card">
+      <h2>Send a booking link</h2>
+      <form id="leadForm" autocomplete="off">
+        <div class="field"><label>Market</label>
+          <div class="seg">
+            <label><input type="radio" name="market" value="IN" checked><span>India</span></label>
+            <label><input type="radio" name="market" value="US"><span>US</span></label>
+          </div>
+        </div>
+        <div class="field"><label for="pn">Parent's name</label><input id="pn" required></div>
+        <div class="field"><label for="ph">WhatsApp number</label><input id="ph" inputmode="tel" required placeholder="98765 43210"></div>
+        <div class="grid2">
+          <div class="field"><label for="cn">Child's name</label><input id="cn" required></div>
+          <div class="field"><label for="ca">Age</label><input id="ca" type="number" min="4" max="18" inputmode="numeric"></div>
+        </div>
+        <div class="field"><label for="src">Source <span class="muted">(optional)</span></label><input id="src" placeholder="e.g. school list, referral"></div>
+        <button class="btn" type="submit" style="width:100%">Save &amp; open WhatsApp</button>
+        <p class="msg" id="leadMsg" aria-live="polite"></p>
+      </form>
+    </section>
 
-<script src="/config.js"></script>
-<script type="module">
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-const C = YT.COL, $ = id => document.getElementById(id);
-const sb = createClient(YT.SUPABASE_URL, YT.SUPABASE_KEY);
-let leads = [], filter = null;
+    <section class="card">
+      <div class="toolbar">
+        <h2 style="margin:0">Leads</h2>
+        <span style="display:flex;gap:8px"><input id="search" type="search" placeholder="Search"><select id="filter" aria-label="Filter by status"><option value="">All</option></select></span>
+      </div>
+      <div id="list"><p class="muted">Loading…</p></div>
+    </section>
+  </div>
+</main>
 
-const toast = m => { const t = $('toast'); t.textContent = m; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2200); };
-const normPhone = p => { let d = String(p||'').replace(/\D/g,''); if (d.length === 10) d = '91' + d; return d; };
-const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+<script>
+const sb = supabase.createClient(YT.SUPABASE_URL, YT.SUPABASE_KEY);
+const $ = (id) => document.getElementById(id);
+let me = null, leads = [];
+
+function normPhone(raw, market) {
+  let d = (raw || '').replace(/\D/g, '');
+  if (d.length === 11 && d.startsWith('0')) d = d.slice(1);
+  if (d.length === 10) d = (market === 'US' ? '1' : '91') + d;
+  return d;
+}
+function bookingLink(l) {
+  const u = new URL(YT.SITE + '/demo/');
+  u.searchParams.set('l', l.id);
+  if (l.parent_name) u.searchParams.set('n', l.parent_name);
+  if (l.child_name) u.searchParams.set('c', l.child_name);
+  if (l.child_age) u.searchParams.set('a', l.child_age);
+  if (l.phone) u.searchParams.set('p', l.phone);
+  return u.toString();
+}
+function waMessage(l) {
+  const first = (l.parent_name || '').split(' ')[0];
+  const kid = l.child_name || 'your child';
+  return `Hi ${first}, lovely speaking with you! Here's the link to book ${kid}'s free AI class with Young Turings. In one live hour, ${kid} will build their own website with AI.\n\n${bookingLink(l)}\n\nPlease pick a slot when they can join from a laptop. See you in class!\n— Team Young Turings`;
+}
+function openWA(l) { window.open('https://wa.me/' + l.phone + '?text=' + encodeURIComponent(waMessage(l)), '_blank'); }
+function fmt(ts) { return ts ? new Date(ts).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' }) : ''; }
+function esc(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 
 async function boot() {
   const { data: { session } } = await sb.auth.getSession();
-  if (!session) { $('gate').hidden = false; $('app').hidden = true; $('who').hidden = true; return; }
-  $('gate').hidden = true; $('app').hidden = false; $('who').hidden = false; $('whoEmail').textContent = session.user.email;
+  if (!session) { show('login'); return; }
+  me = session.user;
+  $('out').classList.remove('hide');
+  const { data: team } = await sb.from('team_members').select('email').eq('email', me.email.toLowerCase());
+  if (!team || !team.length) { $('deniedEmail').textContent = me.email; show('denied'); return; }
+  show('desk');
+  YT.STATUSES.forEach(s => $('filter').insertAdjacentHTML('beforeend', `<option value="${s}">${YT.STATUS_LABEL[s]}</option>`));
   await load();
   sb.channel('leads').on('postgres_changes', { event: '*', schema: 'public', table: 'leads' }, load).subscribe();
 }
+function show(id) { ['login', 'denied', 'desk'].forEach(x => $(x).classList.toggle('hide', x !== id)); }
 
 async function load() {
-  const { data, error } = await sb.from('leads').select('*').order(C.created, { ascending: false }).limit(1000);
-  if (error) { $('list').innerHTML = '<p class="empty">Couldn’t load leads: ' + esc(error.message) + '</p>'; return; }
-  leads = data || []; render();
+  const { data, error } = await sb.from('leads').select('*').order('updated_at', { ascending: false }).limit(300);
+  if (error) { $('list').innerHTML = `<p class="err">${esc(error.message)}</p>`; return; }
+  leads = data; render();
 }
-
 function render() {
-  const counts = Object.fromEntries(YT.STATUSES.map(s => [s, 0]));
-  leads.forEach(l => { if (counts[l[C.status]] !== undefined) counts[l[C.status]]++; });
-  $('funnel').innerHTML = YT.STATUSES.map(s =>
-    `<button class="stage ${filter===s?'on':''}" data-s="${s}"><b>${counts[s]}</b><span>${YT.STATUS_LABEL[s]}</span></button>`).join('');
-  const q = $('search').value.trim().toLowerCase();
-  const rows = leads.filter(l => (!filter || l[C.status] === filter) &&
-    (!q || [l[C.parent], l[C.child], l[C.phone]].join(' ').toLowerCase().includes(q)));
-  if (!rows.length) { $('list').innerHTML = '<p class="empty">No leads here yet.</p>'; return; }
-  $('list').innerHTML = rows.map(l => {
-    const st = l[C.status] || 'new';
-    const when = l[C.booking] ? new Date(l[C.booking]).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }) : '';
-    return `<article class="lead" data-id="${esc(l[C.id])}">
-      <div>
-        <h3>${esc(l[C.parent] || 'Unnamed parent')} <span class="pill ${st}">${YT.STATUS_LABEL[st] || st}</span></h3>
-        <div class="meta"><span>${esc(l[C.phone])}</span>${l[C.child] ? `<span>Child: ${esc(l[C.child])}</span>` : ''}${when ? `<span>Class: ${when}</span>` : ''}</div>
-      </div>
-      <div class="acts">
-        <a class="btn btn-line" href="tel:+${normPhone(l[C.phone])}" data-act="call">Call</a>
-        <button class="btn btn-wa" data-act="send">Send demo link</button>
-        <select data-act="status" aria-label="Status">${YT.STATUSES.map(s => `<option value="${s}" ${s===st?'selected':''}>${YT.STATUS_LABEL[s]}</option>`).join('')}</select>
-      </div>
-    </article>`; }).join('');
+  const f = $('filter').value, s = $('search').value.trim().toLowerCase();
+  const rows = leads.filter(l => (!f || l.status === f) && (!s || [l.parent_name, l.child_name, l.phone].join(' ').toLowerCase().includes(s)));
+  if (!rows.length) { $('list').innerHTML = '<p class="muted">No leads yet.</p>'; return; }
+  $('list').innerHTML = rows.map(l => `
+    <div class="lead">
+      <div class="who"><b>${esc(l.parent_name)}</b> <span class="pill ${l.status === 'booked' ? 'booked' : ''}">${YT.STATUS_LABEL[l.status] || l.status}</span>
+        <div class="meta">${esc(l.child_name || '—')}${l.child_age ? ', ' + l.child_age : ''} · +${esc(l.phone)} · ${l.market}${l.booking_start ? ' · <b>Class ' + fmt(l.booking_start) + '</b>' : ''}</div></div>
+      <select data-id="${l.id}" aria-label="Status">${YT.STATUSES.map(st => `<option value="${st}" ${st === l.status ? 'selected' : ''}>${YT.STATUS_LABEL[st]}</option>`).join('')}</select>
+      <div class="acts"><button class="btn sun" data-wa="${l.id}">Send link on WhatsApp</button><button class="btn ghost" data-copy="${l.id}">Copy link</button></div>
+    </div>`).join('');
 }
 
-async function setStatus(id, status) {
-  const l = leads.find(x => String(x[C.id]) === String(id)); if (l) l[C.status] = status; render();
-  const { error } = await sb.from('leads').update({ [C.status]: status }).eq(C.id, id);
-  if (error) { toast('Couldn’t save: ' + error.message); load(); }
-}
-
-function demoLink(l) {
-  const u = new URL('/demo', YT.SITE);
-  if (l[C.parent]) u.searchParams.set('name', l[C.parent]);
-  u.searchParams.set('phone', normPhone(l[C.phone]));
-  if (l[C.child]) u.searchParams.set('child', l[C.child]);
-  u.searchParams.set('lead', l[C.id]);
-  return u.toString();
-}
-
-$('list').addEventListener('click', e => {
-  const btn = e.target.closest('[data-act]'); if (!btn) return;
-  const id = btn.closest('.lead').dataset.id, l = leads.find(x => String(x[C.id]) === id);
-  if (btn.dataset.act === 'call' && (l[C.status] || 'new') === 'new') setStatus(id, 'called');
-  if (btn.dataset.act === 'send') {
-    const first = (l[C.parent] || '').split(' ')[0];
-    const msg = `Hi${first ? ' ' + first : ''}! Thanks for speaking with us at Young Turings. Here's the link to pick a time for ${l[C.child] ? l[C.child] + '’s' : 'your child’s'} free AI class. It takes 30 seconds:\n\n${demoLink(l)}`;
-    window.open('https://wa.me/' + normPhone(l[C.phone]) + '?text=' + encodeURIComponent(msg), '_blank');
-    if (['new', 'called'].includes(l[C.status] || 'new')) setStatus(id, 'link_sent');
+$('list').addEventListener('change', async (e) => {
+  const id = e.target.dataset.id; if (!id) return;
+  const status = e.target.value;
+  await sb.from('leads').update({ status }).eq('id', id);
+  await sb.from('lead_events').insert({ lead_id: id, type: 'status_' + status, actor: me.email });
+});
+$('list').addEventListener('click', async (e) => {
+  const wa = e.target.dataset.wa, cp = e.target.dataset.copy;
+  const l = leads.find(x => String(x.id) === (wa || cp)); if (!l) return;
+  if (wa) {
+    openWA(l);
+    if (['new', 'called'].includes(l.status)) await sb.from('leads').update({ status: 'link_sent', link_sent_at: new Date().toISOString() }).eq('id', l.id);
+  } else {
+    await navigator.clipboard.writeText(bookingLink(l)); e.target.textContent = 'Copied'; setTimeout(() => e.target.textContent = 'Copy link', 1500);
   }
 });
-$('list').addEventListener('change', e => { if (e.target.dataset.act === 'status') setStatus(e.target.closest('.lead').dataset.id, e.target.value); });
-$('funnel').addEventListener('click', e => { const b = e.target.closest('.stage'); if (!b) return; filter = filter === b.dataset.s ? null : b.dataset.s; render(); });
+$('filter').addEventListener('change', render);
 $('search').addEventListener('input', render);
-$('addBtn').addEventListener('click', () => { $('addForm').reset(); $('addDlg').showModal(); });
-$('addForm').addEventListener('submit', async e => {
-  if (e.submitter?.value !== 'ok') return;
+
+$('leadForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const f = new FormData(e.target), phone = normPhone(f.get('phone'));
-  if (phone.length < 11) { toast('Check the phone number'); return; }
-  const row = { [C.parent]: f.get('parent').trim(), [C.phone]: phone, [C.status]: 'new' };
-  if (f.get('child').trim()) row[C.child] = f.get('child').trim();
-  const { error } = await sb.from('leads').insert(row);
-  if (error) { toast(/duplicate|unique/i.test(error.message) ? 'That phone is already a lead' : 'Couldn’t add: ' + error.message); return; }
-  $('addDlg').close(); toast('Lead added'); load();
+  const market = document.querySelector('input[name=market]:checked').value;
+  const phone = normPhone($('ph').value, market);
+  if (phone.length < 11) { $('leadMsg').innerHTML = '<span class="err">Check the phone number.</span>'; return; }
+  const age = parseInt($('ca').value, 10);
+  const row = { parent_name: $('pn').value.trim(), phone, child_name: $('cn').value.trim() || null, child_age: age >= 4 && age <= 18 ? age : null,
+    market, source: $('src').value.trim() || null, owner_email: me.email, status: 'link_sent', link_sent_at: new Date().toISOString() };
+  // Don't knock an already-booked/paid lead back to "link sent"
+  const existing = leads.find(l => l.phone === phone);
+  if (existing && ['booked', 'showed', 'paid'].includes(existing.status)) { delete row.status; delete row.link_sent_at; }
+  const { data, error } = await sb.from('leads').upsert(row, { onConflict: 'phone' }).select().single();
+  if (error) { $('leadMsg').innerHTML = `<span class="err">${esc(error.message)}</span>`; return; }
+  await sb.from('lead_events').insert({ lead_id: data.id, type: 'link_sent', actor: me.email });
+  openWA(data);
+  $('leadMsg').textContent = 'Saved. WhatsApp opened with the link.';
+  e.target.reset(); load();
 });
-$('loginForm').addEventListener('submit', async e => {
+
+$('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const { error } = await sb.auth.signInWithOtp({ email: $('email').value.trim(), options: { emailRedirectTo: YT.SITE + '/sales', shouldCreateUser: true } });
-  $('gateMsg').textContent = error ? error.message : 'Check your inbox for the sign-in link.';
+  $('loginMsg').textContent = 'Sending…';
+  const { error } = await sb.auth.signInWithOtp({ email: $('em').value.trim().toLowerCase(), options: { emailRedirectTo: YT.SITE + '/sales/', shouldCreateUser: true } });
+  $('loginMsg').innerHTML = error ? `<span class="err">${esc(error.message)}</span>` : 'Check your inbox for the sign-in link.';
 });
-$('signOut').addEventListener('click', async () => { await sb.auth.signOut(); boot(); });
-sb.auth.onAuthStateChange(() => boot());
-if (YT.SUPABASE_URL.startsWith('REPLACE')) { document.body.insertAdjacentHTML('beforeend', '<p class="empty">Sales Desk isn’t connected to the database yet.</p>'); } else boot();
+$('out').addEventListener('click', async () => { await sb.auth.signOut(); location.reload(); });
+sb.auth.onAuthStateChange((ev) => { if (ev === 'SIGNED_IN' && !me) boot(); });
+boot();
 </script>
 </body>
 </html>
