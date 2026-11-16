@@ -137,7 +137,7 @@ function bookingLink(l) {
 function waMessage(l) {
   const first = (l.parent_name || '').split(' ')[0];
   const kid = l.child_name || 'your child';
-  return `Hi ${first}, lovely speaking with you! Here's the link to book ${kid}'s free AI class with Young Turings. In 45 live minutes, ${kid} will build their own website with AI.\n\n${bookingLink(l)}\n\nPlease pick a slot when they can join from a laptop. See you in class!\n— Team Young Turings`;
+  return `Hi ${first}, lovely speaking with you! Here's the link to book ${kid}'s free AI class with Young Turings. In 45 live minutes, ${kid} will build their own website with AI.\n\n${bookingLink(l)}\n\nPlease pick a slot when they can join from a laptop or tablet. See you in class!\n— Team Young Turings`;
 }
 function openWA(l) { window.open('https://wa.me/' + l.phone + '?text=' + encodeURIComponent(waMessage(l)), '_blank'); }
 function fmt(ts) { return ts ? new Date(ts).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' }) : ''; }
