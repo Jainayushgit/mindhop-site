@@ -193,7 +193,8 @@ $('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   $('loginMsg').textContent = 'Sending…';
   const { error } = await sb.auth.signInWithOtp({ email: $('em').value.trim().toLowerCase(), options: { emailRedirectTo: YT.SITE + '/sales/', shouldCreateUser: true } });
-  $('loginMsg').innerHTML = error ? `<span class="err">${esc(error.message)}</span>` : 'Check your inbox for the sign-in link.';
+  const msg = error && /database error|restricted/i.test(error.message) ? "This email isn't on the Young Turings team. Ask Ayush to add you." : error?.message;
+  $('loginMsg').innerHTML = error ? `<span class="err">${esc(msg)}</span>` : 'Check your inbox for the sign-in link.';
 });
 $('out').addEventListener('click', async () => { await sb.auth.signOut(); location.reload(); });
 sb.auth.onAuthStateChange((ev) => { if (ev === 'SIGNED_IN' && !me) boot(); });
