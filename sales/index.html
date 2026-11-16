@@ -34,6 +34,10 @@
 .toolbar select,.toolbar input{width:auto;min-height:40px;font-size:14px}
 .msg{margin-top:10px;font-size:14px}
 .err{color:#B00020}
+.kit{border-top:1px solid var(--line);padding:12px 0;display:grid;gap:8px}
+.kit:first-of-type{border-top:0;padding-top:4px}
+.kit b{font-family:var(--display);font-size:16px}
+.kit .acts .btn{min-height:38px;padding:0 14px;font-size:14px}
 </style>
 </head>
 <body>
@@ -62,6 +66,18 @@
   <!-- Desk -->
   <div id="desk" class="desk hide">
     <div style="display:grid;gap:20px">
+    <section class="card">
+      <h2>Sales kit</h2>
+      <p class="muted" style="margin-top:-4px">Show these on the call or send them on WhatsApp.</p>
+      <div class="kit">
+        <div><b>Sample startup website</b><div class="muted">Sprout Buddy: what a child builds in Level 1</div></div>
+        <div class="acts"><a class="btn" href="/sprout-buddy/" target="_blank" rel="noopener">Open</a><button class="btn ghost" type="button" data-kit="/sprout-buddy/">Copy link</button></div>
+      </div>
+      <div class="kit">
+        <div><b>Investor Day pitch deck</b><div class="muted">The deck the child presents at the end of Level 1</div></div>
+        <div class="acts"><a class="btn" href="/sprout-buddy/pitch/" target="_blank" rel="noopener">Open</a><button class="btn ghost" type="button" data-kit="/sprout-buddy/pitch/">Copy link</button></div>
+      </div>
+    </section>
     <section class="card">
       <h2>Send a booking link</h2>
       <form id="leadForm" autocomplete="off">
@@ -192,6 +208,9 @@ $('list').addEventListener('click', async (e) => {
     await navigator.clipboard.writeText(bookingLink(l)); e.target.textContent = 'Copied'; setTimeout(() => e.target.textContent = 'Copy link', 1500);
   }
 });
+document.querySelectorAll('[data-kit]').forEach(b => b.addEventListener('click', async () => {
+  await navigator.clipboard.writeText(YT.SITE + b.dataset.kit); b.textContent = 'Copied'; setTimeout(() => b.textContent = 'Copy link', 1500);
+}));
 $('filter').addEventListener('change', render);
 $('search').addEventListener('input', render);
 
